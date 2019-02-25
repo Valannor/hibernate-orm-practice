@@ -18,11 +18,11 @@ public abstract class DAO<T> {
         this.sessionFactory = sessionFactory;
     }
 
-    abstract T create(T t);
+    abstract long create(T t);
 
-    abstract T read(int id);
+    abstract T read(long id);
 
-    abstract boolean update(T t);
+    abstract void update(T t);
 
-    abstract boolean delete(T t);
+    abstract void delete(long id);
 }

@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class AddressDAO extends DAO<Address> {
@@ -14,27 +15,28 @@ public class AddressDAO extends DAO<Address> {
     }
 
     @Override
-    public Address create(Address address) {
+    public long create(Address address) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
-        address = (Address) session.save(address);
+        long id = (Long) session.save(address);
         transaction.commit();
 
         session.close();
 
-        return address;
+        return id;
     }
 
     @Override
-    public Address read(int id) {
+    public Address read(long id) {
         Address address;
 
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Address.class);
 
-        criteria.add(Restrictions.gt("ID", id));
+        //Property name has to be the same as the field name
+        criteria.add(Restrictions.eq("id", id));
         address = (Address) criteria.uniqueResult();
 
         transaction.commit();
@@ -45,12 +47,26 @@ public class AddressDAO extends DAO<Address> {
     }
 
     @Override
-    public boolean update(Address address) {
-        return false;
+    public void update(Address address) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.update(address);
+
+        transaction.commit();
+
+        session.close();
     }
 
     @Override
-    public boolean delete(Address address) {
-        return false;
+    public void delete(long id) {
+
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.delete(read(id));
+        transaction.commit();
+
+        session.close();
     }
 }
