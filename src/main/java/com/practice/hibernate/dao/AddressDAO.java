@@ -5,26 +5,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ * With Criteria
+ */
 public class AddressDAO extends DAO<Address> {
 
     public AddressDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
-    }
-
-    @Override
-    public long create(Address address) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        long id = (Long) session.save(address);
-        transaction.commit();
-
-        session.close();
-
-        return id;
     }
 
     @Override
@@ -40,7 +29,6 @@ public class AddressDAO extends DAO<Address> {
         address = (Address) criteria.uniqueResult();
 
         transaction.commit();
-
         session.close();
 
         return address;
@@ -54,7 +42,6 @@ public class AddressDAO extends DAO<Address> {
         session.update(address);
 
         transaction.commit();
-
         session.close();
     }
 
@@ -65,8 +52,8 @@ public class AddressDAO extends DAO<Address> {
         Transaction transaction = session.beginTransaction();
 
         session.delete(read(id));
-        transaction.commit();
 
+        transaction.commit();
         session.close();
     }
 }

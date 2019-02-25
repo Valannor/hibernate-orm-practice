@@ -1,6 +1,8 @@
 package com.practice.hibernate.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 public abstract class DAO<T> {
 
@@ -18,11 +20,21 @@ public abstract class DAO<T> {
         this.sessionFactory = sessionFactory;
     }
 
-    abstract long create(T t);
+    public long create(T t) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-    abstract T read(long id);
+        long id = (Long) session.save(t);
 
-    abstract void update(T t);
+        transaction.commit();
+        session.close();
 
-    abstract void delete(long id);
+        return id;
+    }
+
+    public abstract T read(long id);
+
+    public abstract void update(T t);
+
+    public abstract void delete(long id);
 }
