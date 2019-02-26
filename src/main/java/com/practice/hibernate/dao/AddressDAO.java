@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 /**
  * With Criteria
  */
-public class AddressDAO extends DAO<Address> {
+public class AddressDAO extends AbstractDAO<Address> {
 
     public AddressDAO(SessionFactory sessionFactory) {
         super(sessionFactory);

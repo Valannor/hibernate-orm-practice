@@ -4,11 +4,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public abstract class DAO<T> {
+public abstract class AbstractDAO<T> {
 
     private SessionFactory sessionFactory;
 
-    public DAO(SessionFactory sessionFactory) {
+    public AbstractDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -20,6 +20,10 @@ public abstract class DAO<T> {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * There is no insert command in JPQL and HQL. And it is much easier to use session methods for save, than create an SQL statement.
+     * Although, parameters in query has to be written like this :parameterName. Else-way Hibernate won't understand query.
+     */
     public long create(T t) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

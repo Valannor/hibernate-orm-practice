@@ -11,9 +11,9 @@
         <property name="name" type="string">
             <column name="NAME" length="255" not-null="true"/>
         </property>
-        <many-to-one name="address" class="com.practice.hibernate.entity.Address"
+        <many-to-one name="address" class="com.practice.hibernate.entity.Address" lazy="false"
                      column="ADDRESS_ID" not-null="true" cascade="all"/>
-        <set name="projects" table="EMPL_PROJ" inverse="false" lazy="true" fetch="select" cascade="all">
+        <set name="projects" table="EMPL_PROJ" inverse="false" lazy="false" fetch="select" cascade="all">
             <key>
                 <column name="EMPLOYEE_ID" not-null="true"/>
             </key>

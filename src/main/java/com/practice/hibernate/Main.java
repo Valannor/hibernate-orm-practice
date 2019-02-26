@@ -1,8 +1,10 @@
 package com.practice.hibernate;
 
 import com.practice.hibernate.dao.AddressDAO;
+import com.practice.hibernate.dao.EmployeeDAO;
 import com.practice.hibernate.dao.ProjectDAO;
 import com.practice.hibernate.entity.Address;
+import com.practice.hibernate.entity.Employee;
 import com.practice.hibernate.entity.Project;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -24,6 +26,11 @@ public class Main {
         project.setTitle("AmWorks");
         Set<Project> projects = new HashSet<>();
         projects.add(project);
+
+        Employee employee = new Employee();
+        employee.setName("Frank Underwood");
+        employee.setAddress(address);
+        employee.setProjects(projects);
 
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -61,6 +68,25 @@ public class Main {
         //D
         projectDAO.delete(projectID);
         System.out.println(projectDAO.read(projectID));
+
+        /**
+         * EmployeeDAO
+         */
+        EmployeeDAO employeeDAO = new EmployeeDAO(sessionFactory);
+        //C
+        addressDAO.create(address);
+        projectDAO.create(project);
+        long employeeID = employeeDAO.create(employee);
+        //R
+        Employee employeeResult = employeeDAO.read(employeeID);
+        System.out.println(employeeResult);
+        //U
+        employeeResult.setName("Newton");
+        employeeDAO.update(employeeResult);
+        System.out.println(employeeDAO.read(employeeID));
+        //D
+        employeeDAO.delete(employeeID);
+        System.out.println(employeeDAO.read(employeeID));
 
 
         sessionFactory.close();

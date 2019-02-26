@@ -8,16 +8,11 @@ import org.hibernate.Transaction;
 /**
  * With JPQL/HQL
  */
-public class ProjectDAO extends DAO<Project> {
+public class ProjectDAO extends AbstractDAO<Project> {
 
     public ProjectDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
-
-    /**
-     * There is no insert command in jpql and hql.
-     * Although, parameters in query has to be written like this :parameterName. Else-way Hibernate won't understand query.
-     */
 
     @Override
     public Project read(long id) {
