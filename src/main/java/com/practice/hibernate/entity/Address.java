@@ -1,8 +1,17 @@
 package com.practice.hibernate.entity;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="ADDRESS")
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "ADDRESS")
     private String position;
 
     public Address() {

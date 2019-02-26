@@ -13,9 +13,9 @@
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping resource="mapping/Address.hbm.xml"/>
-        <mapping resource="mapping/Employee.hbm.xml"/>
-        <mapping resource="mapping/Project.hbm.xml"/>
+        <mapping class="com.practice.hibernate.entity.Address"/>
+        <mapping class="com.practice.hibernate.entity.Employee"/>
+        <mapping class="com.practice.hibernate.entity.Project"/>
 
     </session-factory>
 </hibernate-configuration>

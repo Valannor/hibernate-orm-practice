@@ -1,12 +1,28 @@
 package com.practice.hibernate.entity;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "EMPLOYEE")
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "NAME")
     private String name;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "EMPL_PROJ",
+            joinColumns = @JoinColumn(name = "EMPLOYEE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PROJECT_ID")
+    )
     private Set<Project> projects;
 
     public Employee() {
